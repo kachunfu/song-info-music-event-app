@@ -1,0 +1,19 @@
+{
+  "name": "song-info-music-event-app",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:backend": "npm run dev --workspace=apps/backend",
+    "dev:frontend": "npm run dev --workspace=apps/frontend",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces --if-present",
+    "test:e2e": "npx playwright test --config=playwright.config.ts",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}
