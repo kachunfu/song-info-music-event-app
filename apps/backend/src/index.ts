@@ -6,6 +6,9 @@ import { authRouter } from './modules/auth/index.js'
 import { songsRouter } from './modules/songs/index.js'
 import { favoritesRouter } from './modules/favorites/index.js'
 import { eventsRouter } from './modules/events/index.js'
+import { friendsRouter } from './modules/friends/index.js'
+import { sharedSongsRouter } from './modules/shared-songs/index.js'
+import { lyricsPostsRouter } from './modules/lyrics-posts/index.js'
 
 const app = new Hono()
 
@@ -17,6 +20,9 @@ app.route('/api/auth', authRouter)
 app.route('/api/songs', songsRouter)
 app.route('/api/favorites', favoritesRouter)
 app.route('/api/events', eventsRouter)
+app.route('/api/friends', friendsRouter)
+app.route('/api/shared-songs', sharedSongsRouter)
+app.route('/api', lyricsPostsRouter)
 
 async function start() {
   await runMigrations()

@@ -50,13 +50,14 @@
 - [x] Added programmatic DB migrations (runs on backend startup) — 2026-03-10
 - [x] Fixed docker-compose: all env vars passed to backend (API keys, JWT_SECRET) — 2026-03-10
 - [x] Fixed root build scripts: packages build in correct order — 2026-03-10
-- [ ] Choose hosting platform (EC2 free tier, Oracle Cloud always-free, Railway, Render, Fly.io)
-- [ ] Provision server instance (Ubuntu 22.04, Docker + Compose)
-- [ ] Manual deploy (clone, .env, docker compose up)
-- [ ] Add Caddy reverse proxy to docker-compose (HTTPS)
-- [ ] Configure Cloudflare DNS (A record → server IP)
-- [ ] Update Caddy with domain + verify HTTPS
-- [ ] Add CD pipeline to GitHub Actions (auto-deploy on push to main)
+- [x] Chose EC2 free tier (t2.micro, Ubuntu 22.04) — 2026-03-10
+- [x] Provisioned EC2, installed Docker + Compose — 2026-03-10
+- [x] Manual deploy (clone, .env, docker compose up) — 2026-03-10
+- [x] Added nginx reverse proxy for API routing — 2026-03-10
+- [x] Added Caddy reverse proxy for automatic HTTPS — 2026-03-10
+- [x] DuckDNS domain: songinfo.duckdns.org — 2026-03-10
+- [x] HTTPS working with auto-provisioned TLS certificate — 2026-03-10
+- [x] CI/CD pipeline: GitHub Actions (test → deploy to EC2 on push to main) — 2026-03-10
 
 ### Testing
 - [x] Tests for favorites routes (10 tests) — 2026-03-09

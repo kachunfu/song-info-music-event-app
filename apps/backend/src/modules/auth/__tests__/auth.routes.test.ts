@@ -30,11 +30,12 @@ describe('Auth Routes', () => {
 
   describe('POST /api/auth/register', () => {
     it('returns 201 on successful registration', async () => {
-      const mockResponse = { token: 'jwt-token', user: { id: 1, email: 'test@example.com' } }
+      const mockResponse = { token: 'jwt-token', user: { id: 1, email: 'test@example.com', username: 'testuser' } }
       vi.mocked(register).mockResolvedValue(mockResponse)
 
       const res = await app.request(jsonRequest('/api/auth/register', {
         email: 'test@example.com',
+        username: 'testuser',
         password: 'password123',
       }))
 
@@ -44,6 +45,7 @@ describe('Auth Routes', () => {
       expect(body.user.email).toBe('test@example.com')
       expect(register).toHaveBeenCalledWith({
         email: 'test@example.com',
+        username: 'testuser',
         password: 'password123',
       })
     })
@@ -51,6 +53,7 @@ describe('Auth Routes', () => {
     it('returns 400 for invalid email', async () => {
       const res = await app.request(jsonRequest('/api/auth/register', {
         email: 'not-an-email',
+        username: 'testuser',
         password: 'password123',
       }))
 
@@ -63,6 +66,7 @@ describe('Auth Routes', () => {
     it('returns 400 for short password', async () => {
       const res = await app.request(jsonRequest('/api/auth/register', {
         email: 'test@example.com',
+        username: 'testuser',
         password: '123',
       }))
 
@@ -82,7 +86,7 @@ describe('Auth Routes', () => {
 
   describe('POST /api/auth/login', () => {
     it('returns 200 with token on successful login', async () => {
-      const mockResponse = { token: 'jwt-token', user: { id: 1, email: 'test@example.com' } }
+      const mockResponse = { token: 'jwt-token', user: { id: 1, email: 'test@example.com', username: 'testuser' } }
       vi.mocked(login).mockResolvedValue(mockResponse)
 
       const res = await app.request(jsonRequest('/api/auth/login', {

@@ -9,6 +9,7 @@ export interface LoginRequest {
 /** POST /api/auth/register request body */
 export interface RegisterRequest {
   email: string
+  username: string
   password: string
 }
 

@@ -11,6 +11,7 @@ export default function LoginPage() {
 
   const [isRegister, setIsRegister] = useState(false)
   const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
@@ -18,8 +19,21 @@ export default function LoginPage() {
     e.preventDefault()
     setError('')
 
-    const mutation = isRegister ? register : login
-    mutation.mutate(
+    if (isRegister) {
+      register.mutate(
+        { email, username, password },
+        {
+          onSuccess: (data) => {
+            setAuth(data.token, data.user)
+            navigate({ to: '/search' })
+          },
+          onError: (err) => setError(err.message),
+        },
+      )
+      return
+    }
+
+    login.mutate(
       { email, password },
       {
         onSuccess: (data) => {
@@ -54,6 +68,26 @@ export default function LoginPage() {
             placeholder="you@example.com"
           />
         </div>
+
+        {isRegister && (
+          <div>
+            <label htmlFor="username" className="block text-sm font-medium text-muted-foreground mb-1">
+              Username
+            </label>
+            <input
+              id="username"
+              type="text"
+              required
+              minLength={3}
+              maxLength={30}
+              pattern="[a-zA-Z0-9_]+"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
+              placeholder="letters, numbers, underscores"
+            />
+          </div>
+        )}
 
         <div>
           <label htmlFor="password" className="block text-sm font-medium text-muted-foreground mb-1">

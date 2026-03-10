@@ -6,6 +6,7 @@ const JWT_SECRET = process.env.JWT_SECRET ?? 'dev_secret'
 export type AuthVariables = {
   userId: number
   email: string
+  username: string
 }
 
 export const authMiddleware = createMiddleware<{ Variables: AuthVariables }>(async (c, next) => {
@@ -23,5 +24,6 @@ export const authMiddleware = createMiddleware<{ Variables: AuthVariables }>(asy
 
   c.set('userId', Number(payload.sub))
   c.set('email', payload.email as string)
+  c.set('username', payload.username as string)
   await next()
 })
