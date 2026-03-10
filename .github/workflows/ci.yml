@@ -27,14 +27,20 @@ jobs:
       - name: Run tests
         run: npm run test
 
-  build:
+  deploy:
     runs-on: ubuntu-latest
     needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Build backend Docker image
-        run: docker build -f docker/Dockerfile.backend -t musicapp-backend .
-
-      - name: Build frontend Docker image
-        run: docker build -f docker/Dockerfile.frontend -t musicapp-frontend .
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/song-info-music-event-app
+            git pull origin main
+            cd docker
+            docker compose --env-file .env up --build -d
+            docker image prune -f
