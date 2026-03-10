@@ -19,6 +19,11 @@ services:
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-musicapp}
       PORT: 3000
+      JWT_SECRET: ${JWT_SECRET}
+      SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}
+      SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}
+      LASTFM_API_KEY: ${LASTFM_API_KEY}
+      TICKETMASTER_API_KEY: ${TICKETMASTER_API_KEY}
     ports:
       - "3000:3000"
     depends_on:

@@ -45,6 +45,19 @@
 - [ ] Consider adding SeatGeek as second provider (free key, but no HK coverage)
 - [ ] Consider filtering Ticketmaster by Asia-Pacific region (SG, JP, AU have events)
 
+### Deployment (Phase 2–4)
+- [x] Fixed Docker production build: workspace packages now compile to JS — 2026-03-10
+- [x] Added programmatic DB migrations (runs on backend startup) — 2026-03-10
+- [x] Fixed docker-compose: all env vars passed to backend (API keys, JWT_SECRET) — 2026-03-10
+- [x] Fixed root build scripts: packages build in correct order — 2026-03-10
+- [ ] Choose hosting platform (EC2 free tier, Oracle Cloud always-free, Railway, Render, Fly.io)
+- [ ] Provision server instance (Ubuntu 22.04, Docker + Compose)
+- [ ] Manual deploy (clone, .env, docker compose up)
+- [ ] Add Caddy reverse proxy to docker-compose (HTTPS)
+- [ ] Configure Cloudflare DNS (A record → server IP)
+- [ ] Update Caddy with domain + verify HTTPS
+- [ ] Add CD pipeline to GitHub Actions (auto-deploy on push to main)
+
 ### Testing
 - [x] Tests for favorites routes (10 tests) — 2026-03-09
 - [x] Tests for events routes (5 tests) — 2026-03-09
@@ -79,3 +92,6 @@
 - [x] Spotify Audio Features code ready (blocked by dev mode 403) — 2026-03-09
 - [x] Tests expanded to 72 (events, favorites, translation, audio features) — 2026-03-09
 - [x] Ticketmaster + Last.fm real API keys configured — 2026-03-09
+- [x] Git repo initialized + pushed to GitHub (kachunfu/song-info-music-event-app) — 2026-03-09
+- [x] .gitignore updated (added logs/, .claude/) — 2026-03-09
+- [x] Docker production build fixed (workspace packages compile, migrations auto-run) — 2026-03-10

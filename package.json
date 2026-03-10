@@ -6,9 +6,10 @@
     "packages/*"
   ],
   "scripts": {
-    "dev:backend": "npm run dev --workspace=apps/backend",
+    "build:packages": "npm run build --workspace=packages/shared && npm run build --workspace=packages/database",
+    "dev:backend": "npm run build:packages && npm run dev --workspace=apps/backend",
     "dev:frontend": "npm run dev --workspace=apps/frontend",
-    "build": "npm run build --workspaces",
+    "build": "npm run build:packages && npm run build --workspace=apps/backend && npm run build --workspace=apps/frontend",
     "test": "npm run test --workspaces --if-present",
     "test:e2e": "npx playwright test --config=playwright.config.ts",
     "lint": "npm run lint --workspaces --if-present"

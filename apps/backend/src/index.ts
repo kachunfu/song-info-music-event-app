@@ -1,6 +1,7 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import { runMigrations } from '@app/database'
 import { authRouter } from './modules/auth/index.js'
 import { songsRouter } from './modules/songs/index.js'
 import { favoritesRouter } from './modules/favorites/index.js'
@@ -17,7 +18,16 @@ app.route('/api/songs', songsRouter)
 app.route('/api/favorites', favoritesRouter)
 app.route('/api/events', eventsRouter)
 
-const port = Number(process.env.PORT) || 3000
-serve({ fetch: app.fetch, port }, (info) => {
-  console.log(`Server running on http://localhost:${info.port}`)
+async function start() {
+  await runMigrations()
+
+  const port = Number(process.env.PORT) || 3000
+  serve({ fetch: app.fetch, port }, (info) => {
+    console.log(`Server running on http://localhost:${info.port}`)
+  })
+}
+
+start().catch((err) => {
+  console.error('Failed to start server:', err)
+  process.exit(1)
 })
