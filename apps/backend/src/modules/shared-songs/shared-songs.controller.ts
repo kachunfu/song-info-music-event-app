@@ -75,7 +75,7 @@ sharedSongsController.post('/:id/invite', async (c) => {
     console.error('Invite to shared song error:', err)
     const message = err instanceof Error ? err.message : 'Failed to invite'
     const status = message === 'Shared song not found' || message === 'User not found' ? 404
-      : message.includes('Only the creator') ? 403
+      : message.includes('Only the creator') || message.includes('only invite friends') ? 403
       : message.includes('already a member') ? 409
       : 500
     return c.json({ error: message }, status)

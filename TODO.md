@@ -59,14 +59,28 @@
 - [x] HTTPS working with auto-provisioned TLS certificate — 2026-03-10
 - [x] CI/CD pipeline: GitHub Actions (test → deploy to EC2 on push to main) — 2026-03-10
 
+### Lyrics Share Feature
+- [x] DB schema: friendships, shared_songs, shared_song_members, lyrics_posts, lyrics_post_favorites, lyrics_post_comments — 2026-03-10
+- [x] Username field added to users (backfill migration) — 2026-03-10
+- [x] Friends module: send/accept requests, list friends, remove — 2026-03-10
+- [x] Shared Songs module: create, list, detail, invite (creator only), delete — 2026-03-10
+- [x] Lyrics Posts module: add/delete posts, favorite/unfavorite, comments — 2026-03-10
+- [x] Frontend: Friends, SharedSongs, SharedSongDetail pages — 2026-03-10
+- [x] Navbar updated with Shared + Friends links — 2026-03-10
+- [x] Auth updated: register requires username, login returns username — 2026-03-10
+- [x] Deployed to EC2 via CI/CD — 2026-03-10
+- [ ] Add tests for friends, shared-songs, lyrics-posts modules
+- [ ] Test end-to-end on live site
+
 ### Testing
 - [x] Tests for favorites routes (10 tests) — 2026-03-09
 - [x] Tests for events routes (5 tests) — 2026-03-09
 - [x] Tests for translation provider (7 tests) — 2026-03-09
 - [x] Tests for translate endpoint (5 tests) — 2026-03-09
 - [x] Total: 72 tests passing (60 backend, 12 frontend) — 2026-03-09
+- [ ] Add tests for Lyrics Share feature (friends, shared-songs, lyrics-posts)
 - [ ] Run E2E tests against live app
-- [ ] Add CI test step in GitHub Actions
+- [x] CI test step in GitHub Actions — 2026-03-10
 
 ---
 
@@ -96,3 +110,6 @@
 - [x] Git repo initialized + pushed to GitHub (kachunfu/song-info-music-event-app) — 2026-03-09
 - [x] .gitignore updated (added logs/, .claude/) — 2026-03-09
 - [x] Docker production build fixed (workspace packages compile, migrations auto-run) — 2026-03-10
+- [x] Deployed to EC2 with HTTPS (songinfo.duckdns.org) — 2026-03-10
+- [x] CI/CD pipeline (GitHub Actions: test → deploy on push to main) — 2026-03-10
+- [x] Lyrics Share feature: friends, shared songs, lyrics posts, favorites, comments — 2026-03-10

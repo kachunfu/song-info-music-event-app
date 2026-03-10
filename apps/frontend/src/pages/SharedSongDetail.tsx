@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useParams } from '@tanstack/react-router'
+import { useParams, useNavigate } from '@tanstack/react-router'
 import { useAuthStore } from '@/store/auth.store'
 import {
   useSharedSong,
@@ -9,6 +9,7 @@ import {
   useFavoriteLyricsPost,
   useUnfavoriteLyricsPost,
   useInviteToSharedSong,
+  useDeleteSharedSong,
   useLyricsComments,
   useAddLyricsComment,
 } from '@/lib/hooks'
@@ -18,10 +19,12 @@ export default function SharedSongDetailPage() {
   const sharedSongId = Number(id)
   const user = useAuthStore((s) => s.user)
 
+  const navigate = useNavigate()
   const song = useSharedSong(sharedSongId)
   const posts = useLyricsPosts(sharedSongId)
   const addPost = useAddLyricsPost()
   const deletePost = useDeleteLyricsPost()
+  const deleteSong = useDeleteSharedSong()
   const favorite = useFavoriteLyricsPost()
   const unfavorite = useUnfavoriteLyricsPost()
   const invite = useInviteToSharedSong()
@@ -60,7 +63,24 @@ export default function SharedSongDetailPage() {
   return (
     <div className="max-w-3xl">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">{song.data.title}</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold">{song.data.title}</h1>
+          {isCreator && (
+            <button
+              onClick={() => {
+                if (confirm('Delete this shared song? All lyrics posts will be removed.')) {
+                  deleteSong.mutate(sharedSongId, {
+                    onSuccess: () => navigate({ to: '/shared-songs' }),
+                  })
+                }
+              }}
+              disabled={deleteSong.isPending}
+              className="rounded-md border border-red-500 px-3 py-1.5 text-sm text-red-500 hover:bg-red-500 hover:text-white transition-colors disabled:opacity-50"
+            >
+              {deleteSong.isPending ? 'Deleting...' : 'Delete Song'}
+            </button>
+          )}
+        </div>
         <p className="text-sm text-muted-foreground">
           Created by {song.data.creatorUsername}
         </p>
@@ -147,9 +167,9 @@ export default function SharedSongDetailPage() {
                       ? unfavorite.mutate({ postId: post.id, sharedSongId })
                       : favorite.mutate({ postId: post.id, sharedSongId })
                   }
-                  className={`transition-colors ${post.isFavorited ? 'text-red-500' : 'text-muted-foreground hover:text-red-500'}`}
+                  className={`transition-colors ${post.isFavorited ? 'text-blue-500' : 'text-muted-foreground hover:text-blue-500'}`}
                 >
-                  {post.isFavorited ? '&#9829;' : '&#9825;'} {post.favoriteCount}
+                  {post.isFavorited ? '👍' : '👍'} {post.favoriteCount}
                 </button>
 
                 <button

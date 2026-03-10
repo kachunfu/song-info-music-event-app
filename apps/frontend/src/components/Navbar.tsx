@@ -1,8 +1,11 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
+import { useQueryClient } from '@tanstack/react-query'
 import { useAuthStore } from '@/store/auth.store'
 
 export function Navbar() {
   const { user, clearAuth, isAuthenticated } = useAuthStore()
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   return (
     <nav className="border-b bg-background">
@@ -52,7 +55,7 @@ export function Navbar() {
               </Link>
               <span className="text-muted-foreground text-xs">@{user?.username}</span>
               <button
-                onClick={clearAuth}
+                onClick={() => { clearAuth(); queryClient.clear(); navigate({ to: '/search' }) }}
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 Logout

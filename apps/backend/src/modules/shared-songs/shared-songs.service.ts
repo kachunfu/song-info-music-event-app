@@ -1,5 +1,5 @@
-import { eq, and, sql } from 'drizzle-orm'
-import { db, sharedSongs, sharedSongMembers, users } from '@app/database'
+import { eq, and, or, sql } from 'drizzle-orm'
+import { db, sharedSongs, sharedSongMembers, users, friendships } from '@app/database'
 import type { SharedSong, SharedSongMember } from '@app/shared'
 
 async function getMembers(sharedSongId: number): Promise<SharedSongMember[]> {
@@ -124,6 +124,23 @@ export async function inviteToSharedSong(
     .then((r) => r[0])
 
   if (!invitee) throw new Error('User not found')
+
+  // Verify the invitee is a friend of the inviter
+  const friendship = await db
+    .select()
+    .from(friendships)
+    .where(
+      and(
+        eq(friendships.status, 'accepted'),
+        or(
+          and(eq(friendships.requesterId, inviterId), eq(friendships.addresseeId, invitee.id)),
+          and(eq(friendships.requesterId, invitee.id), eq(friendships.addresseeId, inviterId)),
+        ),
+      ),
+    )
+    .then((r) => r[0])
+
+  if (!friendship) throw new Error('You can only invite friends')
 
   // Check if already a member
   const existing = await db
