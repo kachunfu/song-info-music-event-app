@@ -36,7 +36,21 @@ export function Navbar() {
               >
                 Favorites
               </Link>
-              <span className="text-muted-foreground text-xs">{user?.email}</span>
+              <Link
+                to="/shared-songs"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                activeProps={{ className: 'text-foreground font-medium' }}
+              >
+                Shared
+              </Link>
+              <Link
+                to="/friends"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                activeProps={{ className: 'text-foreground font-medium' }}
+              >
+                Friends
+              </Link>
+              <span className="text-muted-foreground text-xs">@{user?.username}</span>
               <button
                 onClick={clearAuth}
                 className="text-muted-foreground hover:text-foreground transition-colors"

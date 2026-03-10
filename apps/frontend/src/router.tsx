@@ -5,6 +5,9 @@ import SearchPage from '@/pages/Search'
 import SongDetailPage from '@/pages/SongDetail'
 import FavoritesPage from '@/pages/Favorites'
 import EventsPage from '@/pages/Events'
+import FriendsPage from '@/pages/Friends'
+import SharedSongsPage from '@/pages/SharedSongs'
+import SharedSongDetailPage from '@/pages/SharedSongDetail'
 import { useAuthStore } from '@/store/auth.store'
 
 const rootRoute = createRootRoute({
@@ -45,6 +48,36 @@ const eventsRoute = createRoute({
   component: EventsPage,
 })
 
+const friendsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/friends',
+  beforeLoad: () => {
+    const isAuthenticated = useAuthStore.getState().isAuthenticated()
+    if (!isAuthenticated) throw redirect({ to: '/login' })
+  },
+  component: FriendsPage,
+})
+
+const sharedSongsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/shared-songs',
+  beforeLoad: () => {
+    const isAuthenticated = useAuthStore.getState().isAuthenticated()
+    if (!isAuthenticated) throw redirect({ to: '/login' })
+  },
+  component: SharedSongsPage,
+})
+
+const sharedSongDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/shared-songs/$id',
+  beforeLoad: () => {
+    const isAuthenticated = useAuthStore.getState().isAuthenticated()
+    if (!isAuthenticated) throw redirect({ to: '/login' })
+  },
+  component: SharedSongDetailPage,
+})
+
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
@@ -58,6 +91,9 @@ const routeTree = rootRoute.addChildren([
   songDetailRoute,
   favoritesRoute,
   eventsRoute,
+  friendsRoute,
+  sharedSongsRoute,
+  sharedSongDetailRoute,
 ])
 
 export const router = createRouter({ routeTree })
