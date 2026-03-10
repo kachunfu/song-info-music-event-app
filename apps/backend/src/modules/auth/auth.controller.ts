@@ -19,13 +19,23 @@ const loginSchema = z.object({
 authController.post('/register', async (c) => {
   const parsed = registerSchema.safeParse(await c.req.json())
   if (!parsed.success) return c.json({ error: parsed.error.flatten() }, 400)
-  const result = await register(parsed.data)
-  return c.json(result, 201)
+  try {
+    const result = await register(parsed.data)
+    return c.json(result, 201)
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Registration failed'
+    return c.json({ error: message }, 400)
+  }
 })
 
 authController.post('/login', async (c) => {
   const parsed = loginSchema.safeParse(await c.req.json())
   if (!parsed.success) return c.json({ error: parsed.error.flatten() }, 400)
-  const result = await login(parsed.data)
-  return c.json(result)
+  try {
+    const result = await login(parsed.data)
+    return c.json(result)
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Login failed'
+    return c.json({ error: message }, 401)
+  }
 })
