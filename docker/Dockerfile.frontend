@@ -10,6 +10,7 @@ RUN npm install
 FROM base AS build
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN npm run build --workspace=packages/shared
 RUN npm run build --workspace=apps/frontend
 
 FROM nginx:alpine AS runner
